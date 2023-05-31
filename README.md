@@ -1,26 +1,16 @@
-import math
+Лабораторна робота №6
+Завдання полягає в тому, щоб написати програму, яка розраховує оцінку проекту за допомогою https://en.wikipedia.org/wiki/Three-point_estimation.
 
-def num(a, m, b):
-    E = (a + 4*m + b) / 6
-    SD = (b - a) / 6
-    return E, SD
+Програма просить користувача надати доступні завдання (принаймні одне) з 3 необхідними оцінками (a, m, b). Після цього обчислює оцінку (E) і стандартне відхилення (SD) для кожного завдання за такими формулами:
 
-tasks = []
-while True:
-    a = float(input("Enter the 'a' number: (or enter '0' to finish): "))
-    if a == 0:
-        break
-    m = float(input("Enter the 'm' number: "))
-    b = float(input("Enter the 'b' number: "))
-    tasks.append((a, m, b))
+E(task) = (a + 4m + b) / 6
 
-E_tasks, SD_tasks = zip(*[num(*task) for task in tasks])
+SD(task) = (b − a) / 6
 
-E_project = sum(E_tasks)
-SD_project = math.sqrt(sum(sd**2 for sd in SD_tasks))
+Нарешті, обчислює 95% довірчий інтервал (confidence interval (CI)) для проекту на основі https://en.wikipedia.org/wiki/Three-point_estimation#Project_management. Це означає, що E(project) і SE (project) (SE(task) дорівнює SD(task) вище) повинні бути обчислені перед остаточною оцінкою
 
-CI_min = E_project - 2*SD_project
-CI_max = E_project + 2*SD_project
+CI(project) = E(project) ± 2 × SE(project). Остаточні значення мають бути надруковані так:
 
-print(f"Project's 95% confidence interval: {CI_min:.2f} ... {CI_max:.2f} points")
-Clone command: git clone https://github.com/NAME_OF_USER/NAME_OF_REPOSITORIE.git
+Project's 95% confidence interval: 100 ... 120 points
+
+де 100 і 120 – значення мінімального та максимального CI(project).
